@@ -66,7 +66,7 @@
         --btn-primary: #1f883d; --btn-primary-hover: #1a7f37;
         --danger: #cf222e; --danger-soft: #ffebe9; --danger-border: rgba(255,129,130,.4);
         --attention: #9a6700; --attention-soft: #fff8c5;
-        --header-bg: #24292f; --header-fg: #ffffff;
+        --header-bg: #f6f8fa; --header-fg: #1f2328; --header-muted: #656d76; --header-line: #d0d7de; --header-btn-border: rgba(31,35,40,.2); --header-hover: rgba(31,35,40,.08);
         --shadow: 0 8px 24px rgba(140,149,159,.2);
         --c-blue: #0969da;   --c-blue-bg: #ddf4ff;
         --c-green: #1a7f37;  --c-green-bg: #dafbe1;
@@ -87,7 +87,7 @@
         --btn-primary: #238636; --btn-primary-hover: #2ea043;
         --danger: #f85149; --danger-soft: rgba(248,81,73,.12); --danger-border: rgba(248,81,73,.4);
         --attention: #d29922; --attention-soft: rgba(187,128,9,.15);
-        --header-bg: #161b22; --header-fg: #e6edf3;
+        --header-bg: #161b22; --header-fg: #e6edf3; --header-muted: #8d96a0; --header-line: #30363d; --header-btn-border: rgba(255,255,255,.2); --header-hover: rgba(255,255,255,.12);
         --shadow: 0 8px 24px rgba(1,4,9,.6);
         --c-blue: #4493f8;   --c-blue-bg: rgba(56,139,253,.15);
         --c-green: #3fb950;  --c-green-bg: rgba(46,160,67,.15);
@@ -110,6 +110,8 @@
             --danger: #f85149; --danger-soft: rgba(248,81,73,.12); --danger-border: rgba(248,81,73,.4);
             --attention: #d29922; --attention-soft: rgba(187,128,9,.15);
             --header-bg: #161b22; --header-fg: #e6edf3;
+--header-muted: #8d96a0; --header-line: #30363d;
+--header-btn-border: rgba(255,255,255,.2); --header-hover: rgba(255,255,255,.12);
             --shadow: 0 8px 24px rgba(1,4,9,.6);
             --c-blue: #4493f8;   --c-blue-bg: rgba(56,139,253,.15);
             --c-green: #3fb950;  --c-green-bg: rgba(46,160,67,.15);
@@ -256,19 +258,19 @@
     .sb-backdrop { display: none; position: fixed; inset: 0; background: rgba(1,4,9,.55); z-index: 35; }
 
     .main-col { flex: 1; min-width: 0; display: flex; flex-direction: column; }
-    .topbar { position: sticky; top: 0; z-index: 30; display: flex; align-items: center; gap: 12px; height: 56px; padding: 0 16px; background: var(--header-bg); color: var(--header-fg); }
-    .icon-btn { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 6px; background: transparent; border: 1px solid rgba(255,255,255,.2); color: var(--header-fg); cursor: pointer; }
-    .icon-btn:hover { background: rgba(255,255,255,.12); }
+    .topbar { position: sticky; top: 0; z-index: 30; display: flex; align-items: center; gap: 12px; height: 56px; padding: 0 16px; background: var(--header-bg); color: var(--header-fg); border-bottom: 1px solid var(--header-line); }
+   .icon-btn { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 6px; background: transparent; border: 1px solid var(--header-btn-border); color: var(--header-fg); cursor: pointer; }
+.icon-btn:hover { background: var(--header-hover); }
     .content { padding: 24px; width: 100%; max-width: 1400px; margin: 0 auto; flex: 1; }
 
-    .gh-clock { display: flex; align-items: baseline; gap: 8px; font-variant-numeric: tabular-nums; color: rgba(255,255,255,.75); font-size: 12px; text-align: right; }
-    .gh-clock .day { font-weight: 600; color: #fff; }
-    .gh-clock .time { color: #fff; font-weight: 600; font-size: 14px; }
+    .gh-clock { display: flex; align-items: baseline; gap: 8px; font-variant-numeric: tabular-nums; color: var(--header-muted); font-size: 12px; text-align: right; }
+.gh-clock .day { font-weight: 600; color: var(--header-fg); }
+.gh-clock .time { color: var(--header-fg); font-weight: 600; font-size: 14px; }
 
     .gh-menu { position: relative; }
     .gh-menu summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 6px; color: var(--header-fg); }
     .gh-menu summary::-webkit-details-marker { display: none; }
-    .gh-avatar { width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg, #8250df, #0969da); color: #fff; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 1px rgba(255,255,255,.3); }
+    .gh-avatar { width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg, #8250df, #0969da); color: #fff; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 1px var(--header-btn-border); }
     .gh-menu-panel { position: absolute; right: 0; top: 40px; width: 248px; z-index: 60; padding: 8px 0; background: var(--canvas); color: var(--fg); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); }
     .gh-menu-item { display: block; width: 100%; text-align: left; padding: 6px 16px; font-size: 14px; color: var(--fg); background: none; border: 0; cursor: pointer; text-decoration: none; }
     .gh-menu-item:hover { background: var(--line-muted); }
