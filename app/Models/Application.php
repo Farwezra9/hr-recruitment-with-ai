@@ -27,7 +27,8 @@ class Application extends Model
 
     public function jobPosting()
     {
-        return $this->belongsTo(JobPosting::class);
+        // withTrashed: lamaran tetap bisa dibuka walau lowongannya sudah dihapus (soft delete)
+        return $this->belongsTo(JobPosting::class)->withTrashed();
     }
 
     public function stageHistories()

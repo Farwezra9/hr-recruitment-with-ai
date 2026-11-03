@@ -9,3 +9,437 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+:root {
+    --ink: #1f2328;
+    --ink-soft: #59636e;
+    --paper: #f6f8fa;
+    --line: #d1d9e0;
+    --accent: #0969da;
+    --accent-soft: #ddf4ff;
+    --warn: #cf222e;
+    --sidebar: #0d1117;
+    --sidebar-text: #e6edf3;
+    --sidebar-muted: #9198a1;
+}
+
+body {
+    color: var(--ink);
+    background: var(--paper);
+    font-family: var(--font-sans);
+}
+
+.app-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.app-sidebar {
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex: 0 0 256px;
+    flex-direction: column;
+    width: 256px;
+    height: 100vh;
+    padding: 18px 12px 12px;
+    color: var(--sidebar-text);
+    background: var(--sidebar);
+    transition: width 180ms ease, flex-basis 180ms ease, transform 180ms ease;
+    z-index: 30;
+}
+
+.app-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 54px;
+    margin: 0 4px 24px;
+    color: inherit;
+    text-decoration: none;
+}
+
+.brand-mark,
+.account-avatar {
+    display: grid;
+    flex: 0 0 38px;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    border-radius: 12px;
+    color: white;
+    background: linear-gradient(140deg, #8250df, #0969da 65%, #1a7f37);
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.brand-copy,
+.sidebar-user-copy {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+}
+
+.brand-kicker {
+    color: #8c959f;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .12em;
+}
+
+.brand-title {
+    overflow: hidden;
+    color: #f0f6fc;
+    font-size: 14px;
+    font-weight: 650;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.app-nav,
+.sidebar-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.app-nav {
+    flex: 1;
+}
+
+.app-nav-link {
+    display: flex;
+    width: 100%;
+    min-height: 42px;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 11px;
+    border: 0;
+    border-radius: 7px;
+    color: #c9d1d9;
+    background: transparent;
+    font: inherit;
+    font-size: 13px;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 120ms ease, color 120ms ease;
+}
+
+.app-nav-link:hover {
+    color: #fff;
+    background: #21262d;
+}
+
+.app-nav-link.is-active {
+    color: #fff;
+    background: #21262d;
+    box-shadow: inset 3px 0 #2f81f7;
+}
+
+.nav-icon {
+    display: grid;
+    flex: 0 0 20px;
+    width: 20px;
+    place-items: center;
+    color: #8c959f;
+    font-size: 18px;
+    line-height: 1;
+}
+
+.app-nav-link.is-active .nav-icon {
+    color: #79c0ff;
+}
+
+.sidebar-account {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 10px;
+    margin: 12px 4px;
+    padding: 14px 6px 6px;
+    border-top: 1px solid #30363d;
+}
+
+.account-avatar {
+    flex-basis: 34px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    font-size: 15px;
+}
+
+.account-name {
+    overflow: hidden;
+    color: #f0f6fc;
+    font-size: 12px;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.account-role {
+    color: var(--sidebar-muted);
+    font-size: 11px;
+    text-transform: capitalize;
+}
+
+.sidebar-logout {
+    color: #ff8182;
+}
+
+.sidebar-logout:hover {
+    color: #ffa198;
+}
+
+.sidebar-collapse {
+    display: flex;
+    min-height: 38px;
+    align-items: center;
+    gap: 12px;
+    margin-top: 7px;
+    padding: 8px 11px;
+    border: 0;
+    border-radius: 7px;
+    color: #9198a1;
+    background: transparent;
+    font: inherit;
+    font-size: 12px;
+    text-align: left;
+    cursor: pointer;
+}
+
+.sidebar-collapse:hover {
+    color: white;
+    background: #21262d;
+}
+
+.sidebar-collapse > span:first-child {
+    width: 20px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.app-main {
+    min-width: 0;
+    flex: 1;
+}
+
+.app-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    min-height: 64px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 0 32px;
+    border-bottom: 1px solid var(--line);
+    background: rgb(255 255 255 / 94%);
+    backdrop-filter: blur(12px);
+}
+
+.app-topbar::before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #8250df, #0969da 45%, #1a7f37 75%, #bf8700);
+    content: "";
+}
+
+.topbar-context,
+.topbar-clock {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: var(--ink-soft);
+    font-size: 12px;
+}
+
+.topbar-context {
+    color: var(--ink);
+    font-weight: 600;
+}
+
+.topbar-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #1a7f37;
+    box-shadow: 0 0 0 3px #dafbe1;
+}
+
+.topbar-clock #current-time {
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+}
+
+.clock-divider {
+    width: 1px;
+    height: 16px;
+    background: var(--line);
+}
+
+.app-content {
+    width: min(100%, 1440px);
+    margin: 0 auto;
+    padding: 32px;
+}
+
+.app-content .bg-white {
+    box-shadow: 0 1px 2px rgb(31 35 40 / 5%);
+}
+
+.app-content input,
+.app-content select,
+.app-content textarea {
+    max-width: 100%;
+}
+
+.app-content input:focus,
+.app-content select:focus,
+.app-content textarea:focus {
+    border-color: #0969da !important;
+    outline: 2px solid rgb(9 105 218 / 20%);
+    outline-offset: 0;
+}
+
+.mobile-menu-button,
+.sidebar-backdrop {
+    display: none;
+}
+
+body.sidebar-collapsed .app-sidebar {
+    flex-basis: 76px;
+    width: 76px;
+}
+
+body.sidebar-collapsed .brand-copy,
+body.sidebar-collapsed .nav-label,
+body.sidebar-collapsed .sidebar-user-copy {
+    display: none;
+}
+
+body.sidebar-collapsed .app-brand {
+    justify-content: center;
+    margin-right: 0;
+    margin-left: 0;
+}
+
+body.sidebar-collapsed .app-nav-link,
+body.sidebar-collapsed .sidebar-collapse {
+    justify-content: center;
+    padding-right: 0;
+    padding-left: 0;
+}
+
+body.sidebar-collapsed .sidebar-account {
+    justify-content: center;
+    margin-right: 0;
+    margin-left: 0;
+    padding-right: 0;
+    padding-left: 0;
+}
+
+body.sidebar-collapsed .sidebar-collapse > span:first-child {
+    transform: rotate(180deg);
+}
+
+@media (max-width: 760px) {
+    .app-sidebar {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: min(82vw, 290px);
+        height: 100dvh;
+        transform: translateX(-105%);
+    }
+
+    body.sidebar-open .app-sidebar {
+        transform: translateX(0);
+    }
+
+    .sidebar-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 25;
+        background: rgb(1 4 9 / 58%);
+    }
+
+    .sidebar-collapse {
+        display: none;
+    }
+
+    body.sidebar-open .sidebar-backdrop {
+        display: block;
+    }
+
+    .mobile-menu-button {
+        display: grid;
+        width: 36px;
+        height: 36px;
+        flex: 0 0 36px;
+        place-items: center;
+        border: 1px solid var(--line);
+        border-radius: 7px;
+        color: var(--ink);
+        background: white;
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+    .app-topbar {
+        justify-content: flex-start;
+        padding: 0 16px;
+    }
+
+    .topbar-clock {
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 5px 8px;
+        margin-left: auto;
+        text-align: right;
+    }
+
+    .app-content {
+        padding: 24px 18px;
+    }
+
+    .app-content table {
+        display: block;
+        overflow-x: auto;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .topbar-context {
+        display: none;
+    }
+
+    .topbar-clock {
+        font-size: 11px;
+    }
+
+    .app-content {
+        padding: 20px 14px;
+    }
+
+    .app-content .grid-cols-2 {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}

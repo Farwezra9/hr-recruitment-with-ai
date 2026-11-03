@@ -1,56 +1,84 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Lamar - {{ $job->title }}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body style="background:#f7f8fb;">
-    <div class="max-w-xl mx-auto px-6 py-14">
-        <h1 class="text-2xl font-semibold mb-1" style="color:#14213d;">Lamar: {{ $job->title }}</h1>
-        <p class="text-sm mb-8" style="color:#465073;">{{ $job->location ?? '' }}</p>
+@extends('layouts.public')
 
-        @if ($errors->any())
-            <div class="mb-4 rounded-md px-4 py-3 text-sm bg-red-50 text-red-700">
-                <ul class="list-disc pl-4">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+@section('title', 'Lamar - ' . $job->title)
 
-        <form method="POST" action="{{ route('career.submit', $job) }}" enctype="multipart/form-data" class="bg-white border rounded-lg p-6 space-y-4" style="border-color:#e2e5ee;">
-            @csrf
+@section('content')
+    <a href="{{ route('career.index') }}" class="muted text-sm">&larr; Semua lowongan</a>
 
+    <h1 class="text-2xl font-semibold mt-3 mb-1">{{ $job->title }}</h1>
+    <p class="muted mb-6">
+        {{ $job->location ?? 'Lokasi fleksibel' }}
+        &middot; {{ ucfirst(str_replace('_', ' ', $job->employment_type)) }}
+        &middot; {{ ucfirst($job->work_mode) }}
+    </p>
+
+    <div class="gh-box mb-8">
+        <div class="gh-box-header">Tentang posisi ini</div>
+        <div class="gh-box-body space-y-4">
+            <p class="whitespace-pre-line">{{ $job->description }}</p>
+            @if ($job->responsibilities)
+                <div>
+                    <h2 class="font-semibold mb-1">Tanggung jawab</h2>
+                    <p class="whitespace-pre-line muted">{{ $job->responsibilities }}</p>
+                </div>
+            @endif
             <div>
-                <label class="block text-sm font-medium mb-1">Nama Lengkap</label>
-                <input type="text" name="name" value="{{ old('name') }}" class="w-full border rounded-md px-3 py-2" style="border-color:#e2e5ee;" required>
+                <h2 class="font-semibold mb-1">Kualifikasi</h2>
+                <p class="whitespace-pre-line muted">{{ $job->requirements }}</p>
             </div>
-
-            <div>
-                <label class="block text-sm font-medium mb-1">Email</label>
-                <input type="email" name="email" value="{{ old('email') }}" class="w-full border rounded-md px-3 py-2" style="border-color:#e2e5ee;" required>
-            </div>
-
-            <div>
-                <label class="block text-sm font-medium mb-1">No. HP</label>
-                <input type="text" name="phone" value="{{ old('phone') }}" class="w-full border rounded-md px-3 py-2" style="border-color:#e2e5ee;">
-            </div>
-
-            <div>
-                <label class="block text-sm font-medium mb-1">LinkedIn (opsional)</label>
-                <input type="url" name="linkedin_url" value="{{ old('linkedin_url') }}" class="w-full border rounded-md px-3 py-2" style="border-color:#e2e5ee;">
-            </div>
-
-            <div>
-                <label class="block text-sm font-medium mb-1">Upload CV (PDF/DOCX, maks 5MB)</label>
-                <input type="file" name="cv" accept=".pdf,.doc,.docx" class="w-full border rounded-md px-3 py-2" style="border-color:#e2e5ee;" required>
-            </div>
-
-            <button type="submit" class="w-full px-4 py-2 rounded-md text-white text-sm" style="background:#1f7a5c;">Kirim Lamaran</button>
-        </form>
+        </div>
     </div>
-</body>
-</html>
+
+    <h2 class="text-lg font-semibold mb-3">Kirim lamaran</h2>
+
+    @if ($errors->any())
+        <div class="flash flash-error mb-4" role="alert">
+            <ul class="list-disc pl-4">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <form method="POST" action="{{ route('career.submit', $job) }}" enctype="multipart/form-data" class="gh-box gh-box-body space-y-4">
+        @csrf
+
+        {{-- Honeypot anti-bot: disembunyikan dari manusia, bot biasanya mengisinya. --}}
+        <div style="position:absolute; left:-9999px;" aria-hidden="true">
+            <label>Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+        </div>
+
+        <div>
+            <label class="form-label">Nama lengkap</label>
+            <input type="text" name="name" value="{{ old('name') }}" class="w-full px-3 py-2" required>
+        </div>
+        <div>
+            <label class="form-label">Email</label>
+            <input type="email" name="email" value="{{ old('email') }}" class="w-full px-3 py-2" required>
+        </div>
+        <div>
+            <label class="form-label">No. HP</label>
+            <input type="text" name="phone" value="{{ old('phone') }}" class="w-full px-3 py-2">
+        </div>
+        <div>
+            <label class="form-label">LinkedIn <span class="muted font-normal">(opsional)</span></label>
+            <input type="url" name="linkedin_url" value="{{ old('linkedin_url') }}" class="w-full px-3 py-2">
+        </div>
+        <div>
+            <label class="form-label">Upload CV</label>
+            <input type="file" name="cv" accept=".pdf,.docx" class="w-full" required>
+            <p class="muted text-xs mt-1">PDF atau DOCX, maksimal 5 MB. Gunakan CV yang teksnya bisa diseleksi (bukan hasil scan/foto) supaya terbaca sistem.</p>
+        </div>
+
+        <label class="flex items-start gap-2">
+            <input type="checkbox" name="consent" value="1" class="mt-1" @checked(old('consent')) required>
+            <span class="muted">
+                Saya menyetujui data pribadi dan CV saya diproses untuk keperluan seleksi, termasuk dianalisis
+                dengan bantuan AI melalui penyedia layanan pihak ketiga. Keputusan akhir tetap diambil oleh tim rekrutmen.
+            </span>
+        </label>
+
+        <button type="submit" class="btn btn-primary btn-block" style="justify-content:center;">Kirim Lamaran</button>
+    </form>
+@endsection

@@ -7,6 +7,32 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## REST API
+
+API menggunakan bearer token Sanctum. Admin dapat membuat atau mencabut token pada halaman **Profil**. Token berlaku selama 30 hari secara default (atur `SANCTUM_EXPIRATION` dalam menit) dan hanya ditampilkan saat dibuat.
+
+```http
+Authorization: Bearer <token>
+Accept: application/json
+```
+
+Seluruh endpoint API memerlukan akun aktif dengan role admin atau recruiter, serta dibatasi 60 request per menit. Screening AI dibatasi 10 request per menit.
+
+| Method | Endpoint | Keterangan |
+| --- | --- | --- |
+| GET | `/api/user` | Profil pengguna token |
+| GET | `/api/jobs` | Daftar lowongan; filter `status`, atur `per_page` (maks. 100) |
+| POST | `/api/jobs` | Buat lowongan |
+| GET | `/api/jobs/{job}` | Detail lowongan |
+| PUT/PATCH | `/api/jobs/{job}` | Perbarui lowongan |
+| DELETE | `/api/jobs/{job}` | Arsipkan (soft delete) lowongan |
+| GET | `/api/jobs/{job}/applications` | Daftar lamaran; filter `stage`, atur `per_page` (maks. 100) |
+| GET | `/api/applications/{application}` | Detail lamaran |
+| PATCH | `/api/applications/{application}/stage` | Pindahkan tahap dan catat riwayat |
+| POST | `/api/applications/{application}/screen` | Antrikan screening AI |
+
+Data CV mentah dan lokasi file CV tidak disertakan dalam respons API. Lamaran dikelola melalui alur pipeline agar riwayat tahap dan status tetap konsisten.
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:

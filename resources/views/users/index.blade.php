@@ -24,7 +24,7 @@
                     <tr class="border-t" style="border-color: var(--line);">
                         <td class="px-4 py-3 font-medium">{{ $u->name }}</td>
                         <td class="px-4 py-3">{{ $u->email }}</td>
-                        <td class="px-4 py-3">{{ $u->role }}</td>
+                        <td class="px-4 py-3">{{ str_replace('_', ' ', $u->role) }}</td>
                         <td class="px-4 py-3">
                             @if ($u->invite_token)
                                 <span class="stage-pill px-2 py-1 rounded text-xs">Menunggu aktivasi</span>
@@ -35,9 +35,15 @@
                             @endif
                         </td>
                         <td class="px-4 py-3 text-right space-x-3">
+                            @if ($u->invite_token)
+                                <form method="POST" action="{{ route('users.resend-invite', $u) }}" class="inline">
+                                    @csrf
+                                    <button type="submit" class="text-sm" style="color: var(--ink-soft);">Kirim ulang undangan</button>
+                                </form>
+                            @endif
                             <a href="{{ route('users.edit', $u) }}" class="text-sm" style="color: var(--accent);">Edit</a>
                             @if ($u->id !== auth()->id())
-                                <form method="POST" action="{{ route('users.destroy', $u) }}" class="inline" onsubmit="return confirm('Hapus user ini?')">
+                                <form method="POST" action="{{ route('users.destroy', $u) }}" class="inline" onsubmit="return confirm('Hapus user ini? Kalau punya riwayat data, akun hanya dinonaktifkan.')">
                                     @csrf @method('DELETE')
                                     <button type="submit" class="text-sm" style="color: var(--warn);">Hapus</button>
                                 </form>
